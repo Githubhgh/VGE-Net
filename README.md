@@ -1,7 +1,7 @@
 # VGE-Net
 Code for paper "Gaze Estimation by Attention-Induced Hierarchical Variational Auto-Encoder" 
 
-This project is based on Tensorflow 1.15 (More coming soon)
+This project is based on Tensorflow 1.15
 
 ## Citation
 
