@@ -1,3 +1,5 @@
+# The following code snippet is inspired and borrowed from the GazeML project (https://github.com/swook/GazeML).
+# Author: Seonwook Park
 """Main script for training the VGE model for within-MPIIGaze evaluations."""
 import argparse
 import os
@@ -7,6 +9,10 @@ import numpy as np
 import nni
 import logging
 from nni.utils import merge_parameter
+
+import datetime
+import pytz
+import time
 
 
 
@@ -45,6 +51,13 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
 
 def train(FLAGS):
+    from datetime import datetime
+    import pytz
+
+    from datetime import datetime, timedelta
+
+    # 获取当前时间
+    current_time = datetime.now()
 
     # Set global log level
     parser = argparse.ArgumentParser(description='Train the Deep Pictorial Gaze model.')
