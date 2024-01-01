@@ -215,14 +215,13 @@ def dec(enc_feature, latent_z, latent_mean, sample, flag, init=False, n_residual
     enc_feature = list(enc_feature)
     with model_arg_scope(
             init=init, dropout_p=flag.dropout, activation=activation):
-        flag.init_filters = enc_feature[-1].shape.as_list()[-1]
-        dec_temp = nin(enc_feature[-1], flag.init_filters)
+        dec_filters = enc_feature[-1].shape.as_list()[-1]
+        dec_temp = nin(enc_feature[-1], dec_filters)
 
 
         for l in range(flag.n_scales):
             for i in range(n_residual_blocks // 2):
                 dec_temp = residual_block(flag, dec_temp, enc_feature.pop())
-                #res_list.append(dec_temp)
 
             if flag.latent_scales_dims[l] != 0:  # if l < 2
                 ###Sample or just use deterministic mean
@@ -241,13 +240,13 @@ def dec(enc_feature, latent_z, latent_mean, sample, flag, init=False, n_residual
                 dec_temp = residual_block(flag, dec_temp, enc_temp)
 
                 if l + 1 < flag.n_scales:
-                    flag.init_filters = enc_feature[-1].shape.as_list()[-1]
-                    dec_temp = upsample(dec_temp, flag.init_filters, x_up=enc_feature[-1])
+                    dec_filters = enc_feature[-1].shape.as_list()[-1]
+                    dec_temp = upsample(dec_temp, dec_filters, x_up=enc_feature[-1])
             else:
                 dec_temp = residual_block(flag, dec_temp, enc_feature.pop())
                 if l + 1 < flag.n_scales:
-                    flag.init_filters = enc_feature[-1].shape.as_list()[-1]
-                    dec_temp = upsample(dec_temp, flag.init_filters, x_up=enc_feature[-1])
+                    dec_filters = enc_feature[-1].shape.as_list()[-1]
+                    dec_temp = upsample(dec_temp, dec_filters, x_up=enc_feature[-1])
 
 
     return dec_temp
