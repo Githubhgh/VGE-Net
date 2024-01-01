@@ -227,9 +227,9 @@ def dec(enc_feature, latent_z, latent_mean, sample, flag, init=False, n_residual
             if flag.latent_scales_dims[l] != 0:  # if l < 2
                 ###Sample or just use deterministic mean
                 if sample[l]==False:
-                    z_prior = latent_mean.pop(0)
+                    z_prior = latent_mean[l]
                 elif sample[l]==True:
-                    z_prior = latent_z.pop(0)
+                    z_prior = latent_z[l]
 
                 
                 ### Concat latent vectors
